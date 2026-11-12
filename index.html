@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#8edee5">
+<title>JJM Thai | Online Order</title>
+<style>
+:root{--purple:#f25a05;--pink:#ed4f91;--ink:#211d19;--muted:#70685f;--line:#f1dfc8;--paper:#fff;--bg:#f7f1ed;--cream:#fff3bd;--green:#087b58}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.48}
+.page{max-width:760px;margin:0 auto;padding:18px 14px 110px}
+.topbar{height:12px;background:linear-gradient(90deg,#f25a05 0%,#ed4f91 36%,#ffc629 68%,#087b58 100%);border-radius:14px 14px 0 0}
+.sheet{background:var(--paper);border:1px solid #e3e0eb;border-radius:15px;overflow:hidden;margin:0 0 16px;box-shadow:0 2px 8px #31256b0b}
+.pad{padding:24px}
+.brand{display:flex;align-items:center;gap:15px}.brand img{width:82px;height:82px;object-fit:contain;border-radius:50%}
+h1{font-size:clamp(27px,5vw,42px);line-height:1.15;margin:0 0 8px;font-weight:800}
+h2{font-size:22px;margin:0 0 8px}
+.brand h1{
+  font-family:ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;
+  font-size:clamp(25px,5.1vw,39px);
+  line-height:1.12;
+  letter-spacing:-.45px;
+  font-weight:900;
+  color:#d94f91;
+  text-shadow:0 1px 0 #fff;
+}
+.brand h1 .welcome-pink{color:#d94f91;background:none;-webkit-text-fill-color:#d94f91;text-shadow:0 1px 0 #fff}
+.brand h1 .welcome-blue{color:#43b9ca}
+.introline{font-weight:800;font-size:15px;letter-spacing:1px;color:#d96d9d}
+.brand + p{margin-top:22px}
+.sheet:first-child .pad{
+  background:linear-gradient(145deg,#fff8f7 0%,#fffaf0 48%,#f0fbfa 100%);
+}
+.sheet:first-child .pad > p b.info-menu{color:#d94f91}.sheet:first-child .pad > p b.info-ahead{color:#e89a36}.sheet:first-child .pad > p b.info-delivery{color:#62a77b}
+.muted{color:var(--muted)}
+.poster{width:100%;display:block;max-height:540px;object-fit:contain;background:#fff}
+.event-intro{padding:22px 20px 8px;text-align:center;background:linear-gradient(135deg,#fff4f8,#fff9e9 55%,#eefbfc)}
+.event-kicker{margin:0;color:#d94f91;font-size:13px;font-weight:900;letter-spacing:1.5px}
+.event-title{margin:3px 0 4px;color:#43b9ca;font-size:clamp(21px,4.8vw,28px);font-weight:900;line-height:1.2}
+.event-subtitle{margin:0;color:#7a6c75;font-size:14px}
+.event-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px}
+.event-card{overflow:hidden;border:1px solid #f1dce7;border-radius:14px;background:#fff;box-shadow:0 2px 8px #d94f9110}
+.event-card img{display:block;width:100%;height:220px;object-fit:contain;background:#fffafc}
+.event-card-body{padding:12px}
+.event-date{display:inline-block;background:#d94f91;color:#fff;border-radius:20px;padding:5px 9px;font-size:12px;font-weight:900}
+.event-card h3{margin:8px 0 4px;color:#43aebe;font-size:16px;line-height:1.25}
+.event-card p{margin:3px 0;color:#70685f;font-size:13px}
+.event-footer{padding:0 16px 18px;text-align:center;color:#6f6770;font-size:13px}
+@media(max-width:520px){.event-list{grid-template-columns:1fr}.event-card img{height:auto;max-height:390px}.event-card-body{padding:13px}}
+
+.section-head{background:linear-gradient(90deg,#f25a05,#f07812);color:#fff;padding:12px 18px;font-size:19px;font-weight:800;letter-spacing:.2px}
+.product{padding:22px 24px;border-bottom:1px solid var(--line)}.product:last-child{border-bottom:0}
+.product h3{display:table;font-size:20px;line-height:1.25;margin:0 0 10px;padding:8px 13px;border:2px solid currentColor;border-radius:10px;background:#fff;font-weight:800}.product[data-product="meatballs"] h3{color:#e97816;background:#fff5e9}.product[data-product="sausage"] h3{color:#f05a35;background:#fff0e9}.product[data-product="shumai"] h3{color:#c58a00;background:#fff8d8}.product[data-product="chive"] h3{color:#27834b;background:#edfaef}.product[data-product="radna"] h3{color:#269fc4;background:#eafaff}.product[data-product="redpork"] h3{color:#c93636;background:#fff0ef}.product.nemo h3{color:#e97816;background:#fff5e9}.product[data-product="sauce"] h3{color:#ed4f91;background:#fff0f6}.description{margin:0 0 12px;color:#444}
+.thank-you-mascot{display:block;width:180px;height:180px;object-fit:contain;margin:14px auto;border-radius:20px}.sauce-photo-row{display:flex;gap:12px;align-items:center;margin:10px 0 14px;flex-wrap:wrap}.sauce-photo-slot{width:112px;height:112px;margin:0;border:2px dashed #e7a6c4;border-radius:14px;background:#fff8fb;display:block;object-fit:cover}.sauce-photo-slot span{padding:8px} .product-img{width:100%;max-height:390px;object-fit:contain;display:block;margin:14px auto 18px;background:#fff;border-radius:8px}
+.choices{display:grid;gap:8px}.choice-group{font-size:14px;font-weight:800;color:var(--green);margin:10px 0 0;padding-top:5px}.choice{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 13px;background:#faf9fc;border:1px solid #efedf4;border-radius:10px}
+.choice-title{font-weight:700}.price{font-weight:800;white-space:nowrap}.qty{display:flex;align-items:center;gap:9px}
+.qty button{width:34px;height:34px;border:1px solid #d8d3e6;background:#fff;border-radius:50%;font-size:21px;color:var(--green);font-weight:700;cursor:pointer}
+.qty output{min-width:18px;text-align:center;font-weight:700}
+.note{font-size:13px;color:var(--muted);margin:8px 0 0}
+.nemo{background:linear-gradient(140deg,#fff1b8,#fff 55%,#ffe3ef)}
+.preorder{display:inline-block;background:var(--pink);color:#fff;font-size:13px;font-weight:800;letter-spacing:1px;padding:6px 11px;border-radius:20px;margin:4px 0 8px}
+.nemo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.nemo-grid img{width:100%;height:230px;object-fit:cover;border-radius:12px}
+
+.rotating-intro{padding:18px 20px 4px;color:#5e554d;font-size:14px}
+.rotating-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:14px}
+.rotating-card{overflow:hidden;border:1px solid #f0dfc9;border-radius:13px;background:#fffaf2}
+.rotating-card img{display:block;width:100%;height:260px;object-fit:contain;background:#17130f}
+.rotating-card h3{margin:10px 10px 3px;font-size:15px;color:#27834b;line-height:1.25}
+.rotating-card p{margin:0 10px 12px;font-size:12px;color:#70685f}
+.rotating-note{margin:0 14px 16px;padding:11px 13px;border-radius:10px;background:#fff3bd;color:#594b2c;font-size:13px;text-align:center}
+@media(max-width:520px){.rotating-grid{grid-template-columns:1fr 1fr}.rotating-card img{height:220px}.rotating-card:last-child{grid-column:1/-1}.rotating-card:last-child img{height:auto;max-height:420px}}
+
+
+.fulfillment-intro{padding:18px 20px 4px;color:#5e554d}
+.fulfillment-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 18px}
+.fulfillment-button{min-height:64px;border:0;border-radius:40px;background:#f25a05;color:#fff;font-size:clamp(16px,3.8vw,21px);font-weight:900;box-shadow:0 3px 0 #c94700;cursor:pointer}
+.fulfillment-button.shipping-button{grid-column:1/-1;background:#087b58;box-shadow:0 3px 0 #075d43}
+.fulfillment-button.selected{outline:4px solid #ffc629;outline-offset:2px}
+.fulfillment-detail{margin:0 18px 14px;padding:17px;border:1px solid #f1dfc8;border-radius:14px;background:#fffaf4}
+.fulfillment-detail h3{margin:0 0 9px;color:#f25a05;font-size:18px}
+.fulfillment-detail p{margin:7px 0}
+.detail-highlight{display:inline-block;padding:7px 11px;border-radius:9px;background:#fff0bd;color:#72500b;font-weight:800}
+.zone-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+.zone-card{padding:12px;border-radius:11px;display:flex;flex-direction:column;gap:5px;min-height:100px}
+.zone-card b{font-size:15px}.zone-card span{font-size:13px;line-height:1.35}
+.zone-free{background:#e7f6e9;color:#176b3b}.zone-two{background:#fff2c9;color:#885600}.zone-three{background:#ffe3d6;color:#a94322}.zone-four{background:#fce1ef;color:#a52d69}
+.shipping-points{margin:8px 0;padding-left:22px}
+.fulfillment-footnote{margin:0;padding:4px 18px 18px;color:#857b70;font-size:12px}
+@media(max-width:520px){.fulfillment-actions{padding:14px 12px;gap:9px}.fulfillment-button{min-height:60px}.fulfillment-detail{margin-left:12px;margin-right:12px;padding:14px}.zone-grid{gap:7px}.zone-card{padding:10px}}
+
+.cartbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -4px 18px #241a5014;padding:12px max(16px,calc((100vw - 730px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:5}
+.total{font-weight:800}.total small{display:block;font-weight:400;color:var(--muted)}
+button.primary{border:0;border-radius:10px;background:#f25a05;color:#fff;padding:13px 18px;font-size:16px;font-weight:800}
+button:disabled{opacity:.5}
+.cart-details{padding:16px 24px}.cart-line{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)}
+.notice{background:#fff8e9;border:1px solid #f3dfb4;padding:12px 14px;border-radius:10px;font-size:14px}
+@media(max-width:520px){.page{padding:10px 9px 105px}.pad{padding:19px}.product{padding:19px 16px}.brand img{width:66px;height:66px}.nemo-grid img{height:165px}.choice{grid-template-columns:1fr auto}.cartbar{padding:10px 12px}.cartbar button{padding:12px 14px}}
+
+/* Warm pastel menu panels: keep every dish vivid and balanced */
+.product[data-product="meatballs"]{
+  margin:14px 14px 16px;border:1px solid #f1c995;border-bottom:1px solid #f1c995;border-radius:17px;
+  background:linear-gradient(135deg,#fff0cf 0%,#fff8e9 52%,#ffe9d8 100%);
+  box-shadow:0 3px 10px rgba(180,119,54,.08)
+}
+.product[data-product="sausage"]{
+  margin:14px 14px 16px;border:1px solid #f3b7a1;border-bottom:1px solid #f3b7a1;border-radius:17px;
+  background:linear-gradient(135deg,#ffe0d2 0%,#fff0e7 50%,#ffe8ef 100%);
+  box-shadow:0 3px 10px rgba(190,91,63,.08)
+}
+.product[data-product="shumai"]{
+  margin:14px 14px 16px;border:1px solid #efd58a;border-bottom:1px solid #efd58a;border-radius:17px;
+  background:linear-gradient(135deg,#fff0b9 0%,#fff8d9 54%,#ffefdc 100%);
+  box-shadow:0 3px 10px rgba(174,135,35,.08)
+}
+.product[data-product="chive"]{
+  margin:14px 14px 16px;border:1px solid #b9dfbd;border-bottom:1px solid #b9dfbd;border-radius:17px;
+  background:linear-gradient(135deg,#dff3df 0%,#f0fae9 52%,#e3f5ed 100%);
+  box-shadow:0 3px 10px rgba(62,135,81,.08)
+}
+.product[data-product="radna"]{
+  margin:14px 14px 16px;border:1px solid #b6dfea;border-bottom:1px solid #b6dfea;border-radius:17px;
+  background:linear-gradient(135deg,#dff5fb 0%,#effaff 54%,#e4f3f7 100%);
+  box-shadow:0 3px 10px rgba(45,139,165,.08)
+}
+.product[data-product="redpork"]{
+  margin:14px 14px 16px;border:1px solid #efb6ae;border-bottom:1px solid #efb6ae;border-radius:17px;
+  background:linear-gradient(135deg,#ffe1dc 0%,#fff0eb 54%,#fce5ee 100%);
+  box-shadow:0 3px 10px rgba(177,73,67,.08)
+}
+.product[data-product] .choice{
+  background:rgba(255,255,255,.66);
+  border-color:rgba(255,255,255,.9)
+}
+.product[data-product] .product-img{
+  background:rgba(255,255,255,.48);
+  border-radius:13px
+}
+
+/* JJM CUSTOMER PREVIEW — centered layout with A-Muay side feature */
+.page{width:min(1180px,calc(100% - 28px));max-width:1180px;margin:0 auto;padding:18px 14px 110px;}
+.jjm-side-feature{display:none}
+@media (min-width:820px){
+  .page{display:grid;grid-template-columns:minmax(0,760px) minmax(190px,230px);gap:18px;justify-content:center;align-items:start}
+  .page > .sheet{grid-column:1;min-width:0}
+  .page > .jjm-side-feature{grid-column:2;grid-row:1 / span 30;display:block;position:sticky;top:18px;width:100%;margin:28px 0 0;padding:13px;border:1px solid #f2c9d9;border-radius:22px;background:linear-gradient(155deg,#fff8fb 0%,#fff6dc 55%,#eafaff 100%);box-shadow:0 8px 24px rgba(116,65,87,.12);text-align:center;}
+  .jjm-side-feature .side-label{font-size:10px;font-weight:900;letter-spacing:1.2px;color:#d94f91;margin:0 0 6px}
+  .jjm-side-feature h2{font-size:20px;line-height:1.15;color:#43aebe;margin:0 0 7px}
+  .jjm-side-feature .side-copy{font-size:12px;color:#71616a;margin:0 0 10px}
+  .jjm-side-feature .side-muay{display:block;width:100%;height:auto;max-height:205px;object-fit:contain;object-position:center;margin:4px auto 10px;border-radius:13px}
+  .jjm-side-feature .side-food-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+  .jjm-side-feature .side-food-grid img{width:100%;height:74px;object-fit:cover;border-radius:11px;border:2px solid #fff;box-shadow:0 2px 8px #9d718022}
+  .jjm-side-feature .side-tag{display:inline-block;margin-top:12px;padding:7px 10px;border-radius:20px;background:#ed4f91;color:white;font-size:10px;font-weight:900;letter-spacing:.4px}
+}
+@media(max-width:819px){.page{display:block;width:100%;max-width:760px;margin:0 auto}.jjm-side-feature{display:none}}
+
+
+</style>
+</head>
+<body>
+<main class="page">
+  <aside class="jjm-side-feature" aria-label="JJM Thai welcome feature">
+    <p class="side-label">A LITTLE TASTE OF THAILAND</p>
+    <h2>Made with Love<br>from JJM Thai</h2>
+    <p class="side-copy">Your favorite Thai flavors, prepared with care. Welcome to our table!</p>
+    <img class="side-muay" src="assets/a-muay-cooking-collection.png" alt="A-Muay, JJM Thai mascot, cooking and serving Thai food in six poses">
+    <div class="side-food-grid">
+      <img src="assets/meatballs.jpg" alt="JJM Thai meatballs">
+      <img src="assets/rad-na.jpg" alt="Rad Na Thai meal">
+      <img src="assets/shumai.jpg" alt="Shrimp shumai">
+      <img src="assets/nemo-real.jpg" alt="Nemo Hak Kao">
+    </div>
+    <span class="side-tag">THANK YOU FOR VISITING 💗</span>
+  </aside>
+  <div class="sheet">
+    <div class="topbar"></div>
+    <div class="pad">
+      <div class="brand">
+        <img src="assets/jjm-logo.jpg" alt="JJM logo">
+        <div><h1><span class="welcome-pink">Welcome to</span><br><span class="welcome-blue">JJM</span><br><span class="welcome-pink">♡ Online Order ♡</span></h1><div class="introline">JJM THAI · AUTHENTIC THAI MEALS</div></div>
+      </div>
+      <p><b class="info-menu">MENU &amp; EVENT INFO:</b> <span class="muted">Order online with JJM Thai</span></p>
+      <p><b class="info-ahead">ORDER AHEAD</b><br>Regular: 1+ days</p>
+      <p><b class="info-delivery">DELIVERY &amp; SHIPPING</b><br><span class="muted">Please review delivery or shipping arrangements before submitting your order.</span></p>
+      <div class="notice">This is the new HTML order-page preview. Your existing Google Sheets, Apps Script, shipping calculation and payment/receipt workflow are not connected in this preview.</div>
+    </div>
+    <img class="poster" src="assets/order-poster.jpg" alt="JJM Thai online order poster">
+  </div>
+
+  <section class="sheet" id="temple-events">
+    <div class="event-intro">
+      <p class="event-kicker">💗 JJM THAI ON THE GO 💗</p>
+      <h2 class="event-title">UPCOMING EVENT</h2>
+      <p class="event-subtitle">See where JJM Thai will be next · Check the event poster</p>
+    </div>
+    <div class="event-list" style="grid-template-columns:1fr">
+      <article class="event-card">
+        <img src="assets/upcoming-event.jpg" alt="JJM Thai upcoming event announcement">
+      </article>
+    </div>
+    <div class="event-footer">New event coming up? Replace <strong>assets/upcoming-event.jpg</strong> with your latest event poster. No need to add separate event boxes.</div>
+  </section>
+
+  <section class="sheet">
+    <div class="section-head">NEMO HAK KAO · FRESHLY MADE TO ORDER</div>
+    <article class="product nemo">
+      <h3>NEMO HAK KAO</h3>
+      <span class="preorder">MADE TO ORDER</span>
+      <p class="description">Freshly made to order and served with miso soup.</p>
+      <div class="nemo-grid"><img src="assets/nemo-real.jpg" alt="Nemo Hak Kao product photo"><img src="assets/nemo-promo.jpg" alt="Nemo Hak Kao serving presentation"></div>
+      <p class="note">Price and pickup/delivery details to be confirmed. This preview does not assume a price.</p>
+      <div class="choice"><div class="choice-title">Nemo Hak Kao + Miso Soup</div><div class="qty"><button data-key="nemo-preorder" data-price="0" data-pending="true">+</button><output id="q-nemo-preorder">0</output><button data-key="nemo-preorder" data-delta="-1" data-pending="true">−</button></div></div>
+    </article>
+  </section>
+
+
+  <section class="sheet">
+    <div class="section-head">THAI SNACKS &amp; APPETIZERS</div>
+    <article class="product" data-product="meatballs">
+      <h3>#1 THAI MEATBALLS</h3>
+      <p class="description">Choose skewers or frozen-ready 500g pack. Pork, chicken or beef.</p>
+      <img class="product-img" src="assets/meatballs.jpg" alt="JJM Thai meatballs">
+      <div class="choices">
+        <div class="choice-group">MEATBALL SKEWERS · 5 skewers (15 pcs)</div>
+        <div class="choice"><div class="choice-title">Pork</div><div class="qty"><span class="price">$15</span><button data-key="skewer-pork" data-price="15">+</button><output id="q-skewer-pork">0</output><button data-key="skewer-pork" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Chicken</div><div class="qty"><span class="price">$15</span><button data-key="skewer-chicken" data-price="15">+</button><output id="q-skewer-chicken">0</output><button data-key="skewer-chicken" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Beef</div><div class="qty"><span class="price">$20</span><button data-key="skewer-beef" data-price="20">+</button><output id="q-skewer-beef">0</output><button data-key="skewer-beef" data-delta="-1">−</button></div></div>
+        <div class="choice-group">FROZEN PACK · 500g</div>
+        <div class="choice"><div class="choice-title">Pork</div><div class="qty"><span class="price">$30</span><button data-key="frozen-pork" data-price="30">+</button><output id="q-frozen-pork">0</output><button data-key="frozen-pork" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Chicken</div><div class="qty"><span class="price">$30</span><button data-key="frozen-chicken" data-price="30">+</button><output id="q-frozen-chicken">0</output><button data-key="frozen-chicken" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Beef</div><div class="qty"><span class="price">$35</span><button data-key="frozen-beef" data-price="35">+</button><output id="q-frozen-beef">0</output><button data-key="frozen-beef" data-delta="-1">−</button></div></div>
+      </div>
+      <p class="note">Frozen meatball size preference: Small, Medium or Large — specify in order comments.</p>
+    </article>
+
+    <article class="product" data-product="sausage">
+      <h3>#2 THAI ISAAN PORK SAUSAGE</h3><p class="description">Sour (fermented) or non-sour (non-fermented).</p>
+      <img class="product-img" src="assets/isaan-sausage.jpg" alt="JJM Isaan sausage">
+      <div class="choices">
+        <div class="choice-group">SKEWERS · 2 skewers (4–6 pcs)</div>
+        <div class="choice"><div class="choice-title">Sour</div><div class="qty"><span class="price">$10</span><button data-key="sausage-sour" data-price="10">+</button><output id="q-sausage-sour">0</output><button data-key="sausage-sour" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Non-Sour</div><div class="qty"><span class="price">$10</span><button data-key="sausage-nonsour" data-price="10">+</button><output id="q-sausage-nonsour">0</output><button data-key="sausage-nonsour" data-delta="-1">−</button></div></div>
+        <div class="choice-group">FROZEN PACK · Approx. 10–20 pcs / 454g</div>
+        <div class="choice"><div class="choice-title">Sour</div><div class="qty"><span class="price">$20</span><button data-key="sausage-frozen-sour" data-price="20">+</button><output id="q-sausage-frozen-sour">0</output><button data-key="sausage-frozen-sour" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Non-Sour</div><div class="qty"><span class="price">$20</span><button data-key="sausage-frozen-nonsour" data-price="20">+</button><output id="q-sausage-frozen-nonsour">0</output><button data-key="sausage-frozen-nonsour" data-delta="-1">−</button></div></div>
+      </div>
+    </article>
+    <article class="product" data-product="shumai">
+      <h3>#3 SHRIMP SHUMAI</h3><p class="description">Mostly shrimp, contains pork fat. Includes signature JJM dumpling sauce.</p>
+      <img class="product-img" src="assets/shumai.jpg" alt="JJM shrimp shumai">
+      <div class="choices">
+        <div class="choice"><div class="choice-title">5 pieces</div><div class="qty"><span class="price">$12</span><button data-key="shumai-5" data-price="12">+</button><output id="q-shumai-5">0</output><button data-key="shumai-5" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">20 pieces</div><div class="qty"><span class="price">$40</span><button data-key="shumai-20" data-price="40">+</button><output id="q-shumai-20">0</output><button data-key="shumai-20" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">35 pieces</div><div class="qty"><span class="price">$65</span><button data-key="shumai-35" data-price="65">+</button><output id="q-shumai-35">0</output><button data-key="shumai-35" data-delta="-1">−</button></div></div>
+      </div>
+    </article>
+    <article class="product" data-product="chive">
+      <h3>#4 CHIVE DUMPLINGS</h3><p class="description">Vegan &amp; gluten-free. Includes signature JJM dumpling sauce.</p>
+      <img class="product-img" src="assets/chive-dumplings.jpg" alt="JJM chive dumplings">
+      <div class="choices">
+        <div class="choice"><div class="choice-title">3 pieces</div><div class="qty"><span class="price">$10</span><button data-key="chive-3" data-price="10">+</button><output id="q-chive-3">0</output><button data-key="chive-3" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">12 pieces</div><div class="qty"><span class="price">$35</span><button data-key="chive-12" data-price="35">+</button><output id="q-chive-12">0</output><button data-key="chive-12" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">36 pieces</div><div class="qty"><span class="price">$95</span><button data-key="chive-36" data-price="95">+</button><output id="q-chive-36">0</output><button data-key="chive-36" data-delta="-1">−</button></div></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="sheet">
+    <div class="section-head">MAIN MEALS · FREEZE-READY</div>
+    <article class="product" data-product="radna">
+      <h3>#5 RAD NA · THAI GRAVY NOODLE</h3><p class="description">Choose pork, shrimp, or pork &amp; shrimp.</p>
+      <img class="product-img" src="assets/rad-na.jpg" alt="JJM Rad Na kit">
+      <div class="choices">
+        <div class="choice"><div class="choice-title">Rad Na · Pork</div><div class="qty"><span class="price">$18</span><button data-key="radna-pork" data-price="18">+</button><output id="q-radna-pork">0</output><button data-key="radna-pork" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Rad Na · Shrimp</div><div class="qty"><span class="price">$20</span><button data-key="radna-shrimp" data-price="20">+</button><output id="q-radna-shrimp">0</output><button data-key="radna-shrimp" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Rad Na · Pork &amp; Shrimp</div><div class="qty"><span class="price">$25</span><button data-key="radna-mix" data-price="25">+</button><output id="q-radna-mix">0</output><button data-key="radna-mix" data-delta="-1">−</button></div></div>
+      </div>
+    </article>
+    <article class="product" data-product="redpork">
+      <h3>#6 THAI RED PORK</h3><p class="description">Served over steamed Thai jasmine rice with savory red pork gravy, or pork only.</p>
+      <img class="product-img" src="assets/red-pork.jpg" alt="JJM Thai red pork on rice">
+      <div class="choices">
+        <div class="choice"><div class="choice-title">Red Pork on Rice</div><div class="qty"><span class="price">$18</span><button data-key="redpork-rice" data-price="18">+</button><output id="q-redpork-rice">0</output><button data-key="redpork-rice" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Red Pork Only · 500g</div><div class="qty"><span class="price">$35</span><button data-key="redpork-only" data-price="35">+</button><output id="q-redpork-only">0</output><button data-key="redpork-only" data-delta="-1">−</button></div></div>
+      </div>
+    </article>
+  </section>
+
+
+  <section class="sheet" id="rotating-specials">
+    <div class="section-head">ROTATING SPECIALS · FEATURED DISHES</div>
+    <p class="rotating-intro">A look at some of JJM Thai’s special dishes. These are occasional menu features, not part of the regular online order menu.</p>
+    <div class="rotating-grid">
+      <article class="rotating-card">
+        <img src="assets/special-lek-kluk.jpg" alt="JJM Lek Kluk Noodles poster">
+        <h3>LEK KLUK NOODLES</h3><p>Occasional special · Not available every time</p>
+      </article>
+      <article class="rotating-card">
+        <img src="assets/special-khao-soi.jpg" alt="JJM Khao Soi poster">
+        <h3>KHAO SOI</h3><p>Occasional special · Not available every time</p>
+      </article>
+      <article class="rotating-card">
+        <img src="assets/special-boat-noodles.jpg" alt="JJM Thai Boat Noodle Soup and Pork Nam Tok poster">
+        <h3>THAI BOAT NOODLES &amp; PORK NAM TOK</h3><p>Occasional special · Not available every time</p>
+      </article>
+    </div>
+    <p class="rotating-note">These dishes are made in rotating batches. Follow JJM Thai’s event announcements for availability.</p>
+  </section>
+
+  <section class="sheet">
+    <div class="section-head">JJM SAUCE · ADD-ON</div>
+    <article class="product" data-product="sauce">
+      <h3>JJM SAUCE · $15</h3>
+      <p class="description">Choose from Tamarind Sauce, Dumpling Sauce, or Lek Kluk Sauce.</p>
+      <div class="sauce-photo-row">
+        <img class="sauce-photo-slot" src="assets/sauce-1.svg" alt="JJM Sauce photo 1">
+        <img class="sauce-photo-slot" src="assets/sauce-2.svg" alt="JJM Sauce photo 2">
+      </div>
+      <div class="choices">
+        <div class="choice"><div class="choice-title">Tamarind Sauce</div><div class="qty"><span class="price">$15</span><button data-key="sauce-tamarind" data-price="15">+</button><output id="q-sauce-tamarind">0</output><button data-key="sauce-tamarind" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Dumpling Sauce</div><div class="qty"><span class="price">$15</span><button data-key="sauce-dumpling" data-price="15">+</button><output id="q-sauce-dumpling">0</output><button data-key="sauce-dumpling" data-delta="-1">−</button></div></div>
+        <div class="choice"><div class="choice-title">Lek Kluk Sauce</div><div class="qty"><span class="price">$15</span><button data-key="sauce-lekkluk" data-price="15">+</button><output id="q-sauce-lekkluk">0</output><button data-key="sauce-lekkluk" data-delta="-1">−</button></div></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="sheet" id="fulfillment">
+    <div class="section-head">PICK-UP, DELIVERY &amp; SHIPPING</div>
+    <div class="fulfillment-intro">Choose how you would like to receive your JJM Thai order.</div>
+    <div class="fulfillment-actions">
+      <button type="button" class="fulfillment-button" data-fulfillment="pickup">♧ &nbsp; ORDER PICK-UP</button>
+      <button type="button" class="fulfillment-button" data-fulfillment="delivery">🚚 &nbsp; ORDER DELIVERY</button>
+      <button type="button" class="fulfillment-button shipping-button" data-fulfillment="shipping">📦 &nbsp; NATIONWIDE SHIPPING</button>
+    </div>
+    <div class="fulfillment-detail" id="pickup-detail">
+      <h3>📍 PICK-UP AT WAT YANNA RANGSEE</h3>
+      <p><strong>Wat Yanna Rangsee Buddhist Monastery</strong><br>22155 Glenn Dr., Sterling, VA 20164</p>
+      <p class="detail-highlight">FREE PICK-UP · EVENT DATES ONLY</p>
+      <p class="note">Available only when JJM Thai is attending an event at Wat Yanna Rangsee.</p>
+      <hr>
+      <h3>📍 FREE PICK-UP AT THAI SHOP</h3>
+      <p class="detail-highlight">FRIDAYS ONLY</p>
+    </div>
+    <div class="fulfillment-detail" id="delivery-detail">
+      <h3>🚚 LOCAL DELIVERY</h3>
+      <p class="detail-highlight">LOCAL DELIVERY · MINIMUM ORDER $60</p>
+      <p>Delivery days are assigned by zone:</p>
+      <div class="zone-grid">
+        <div class="zone-card zone-free"><b>ZONE 1 · FREE</b><span>Reston / Herndon / Oak Hill<br>Delivery day to be confirmed</span></div>
+        <div class="zone-card zone-two"><b>ZONE 2 · $10</b><span>WEDNESDAYS</span><span>Sterling / Great Falls / Chantilly / Centreville / Tysons / Ashburn</span></div>
+        <div class="zone-card zone-three"><b>ZONE 3 · $15</b><span>THURSDAYS</span><span>Fairfax / Vienna / Oakton / McLean / South Riding / Dunn Loring / Falls Church</span></div>
+        <div class="zone-card zone-four"><b>ZONE 4 · $25</b><span>FRIDAYS</span><span>Alexandria / Arlington / Springfield / Leesburg</span></div>
+      </div>
+      <div class="delivery-date-box" style="margin:14px 0;padding:14px;border:1px solid #f2c6dc;border-radius:14px;background:#fff8fc">
+        <label for="preferred-delivery-date" style="display:block;font-weight:800;margin-bottom:7px;color:#a52d69">📅 PREFERRED DELIVERY DATE</label>
+        <input id="preferred-delivery-date" name="preferred_delivery_date" type="date" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #e6b7ce;border-radius:9px;background:#fff;font:inherit;color:#4b3540">
+        <div style="margin-top:10px;padding:10px;border-radius:9px;background:#fff0c9;color:#76551d;font-size:13px;line-height:1.5">
+          <strong>REMINDER</strong><br>
+          Please choose your preferred delivery date. Delivery is subject to your zone’s scheduled delivery day and availability. Sunday delivery is not available. JJM Thai will confirm your requested date after reviewing your order.
+        </div>
+      </div>
+      <p class="note">Delivery fee is based on the delivery zone. Your exact address, zone and requested delivery date will be confirmed when the order is reviewed.</p>
+    </div>
+    <div class="fulfillment-detail" id="shipping-detail">
+      <h3>📦 NATIONWIDE SHIPPING</h3>
+      <p><strong>USPS shipping · Flat fee: $35</strong></p>
+      <ul class="shipping-points"><li>All eligible menu items</li><li>Freshly packed with care</li><li>Keep refrigerated for best quality</li></ul>
+      <p class="note">Enter your full shipping address during checkout. Shipping availability and final handling details will be confirmed with your order.</p>
+    </div>
+    <p class="fulfillment-footnote">This preview displays the current pick-up and delivery information. Live address collection, zone calculation, shipping charges and checkout are not connected yet.</p>
+  </section>
+
+  <section class="sheet">
+    <div class="section-head">YOUR ORDER</div>
+    <div class="cart-details" id="cart"><p class="muted">Your selected items will appear here.</p></div>
+    <div class="pad"><div class="notice">Preview only: checkout, customer details, tax, delivery/shipping, Google Sheets order recording and payment/receipt are not connected yet. Existing workflow will be connected only after the design is approved and the current Apps Script is reviewed.</div></div>
+  </section>
+<section class="sheet" id="thank-you">
+    <div class="event-intro">
+      <p class="event-kicker">💗 THANK YOU FOR SUPPORTING JJM THAI 💗</p>
+      <h2 class="event-title">Thank You!</h2>
+      <img class="thank-you-mascot" src="assets/thank-you-muay.svg" alt="JJM Thai thank-you mascot">
+      <p class="muted">We appreciate your order. See you again soon!</p>
+    </div>
+  </section>
+</main>
+<div class="cartbar"><div class="total"><span id="itemcount">0 items</span> · <span id="grandtotal">$0.00</span><small>Includes miso soup · freshly prepared after you order · price to be confirmed</small></div><button class="primary" type="button" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">Review Order</button></div>
+<script>
+const cart = {};
+
+// Set the earliest selectable delivery date to the user's local today.
+const deliveryDateInput = document.getElementById("preferred-delivery-date");
+if (deliveryDateInput) {
+ const now = new Date();
+ const localToday = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0,10);
+ deliveryDateInput.min = localToday;
+}
+
+document.querySelectorAll("[data-fulfillment]").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  const chosen=btn.dataset.fulfillment;
+  document.querySelectorAll("[data-fulfillment]").forEach(b=>b.classList.toggle("selected",b===btn));
+  document.querySelectorAll(".fulfillment-detail").forEach(panel=>panel.hidden=true);
+  document.getElementById(chosen+"-detail").hidden=false;
+ });
+});
+document.querySelectorAll(".fulfillment-detail").forEach(panel=>panel.hidden=true);
+
+const labels = {
+"skewer-pork":"Meatball Skewers · Pork","skewer-chicken":"Meatball Skewers · Chicken","skewer-beef":"Meatball Skewers · Beef",
+"frozen-pork":"Frozen Meatballs · Pork 500g","frozen-chicken":"Frozen Meatballs · Chicken 500g","frozen-beef":"Frozen Meatballs · Beef 500g",
+"sausage-sour":"Isaan Sausage · Sour","sausage-nonsour":"Isaan Sausage · Non-Sour","sausage-frozen-sour":"Frozen Isaan Sausage · Sour","sausage-frozen-nonsour":"Frozen Isaan Sausage · Non-Sour",
+"shumai-5":"Shrimp Shumai · 5 pcs","shumai-20":"Shrimp Shumai · 20 pcs","shumai-35":"Shrimp Shumai · 35 pcs",
+"chive-3":"Chive Dumplings · 3 pcs","chive-12":"Chive Dumplings · 12 pcs","chive-36":"Chive Dumplings · 36 pcs",
+"radna-pork":"Rad Na · Pork","radna-shrimp":"Rad Na · Shrimp","radna-mix":"Rad Na · Pork & Shrimp",
+"redpork-rice":"Red Pork on Rice","redpork-only":"Red Pork Only · 500g",
+"nemo-preorder":"Nemo Hak Kao + Miso Soup",
+"sauce-tamarind":"Tamarind Sauce","sauce-dumpling":"Dumpling Sauce","sauce-lekkluk":"Lek Kluk Sauce"
+};
+document.querySelectorAll("button[data-key]").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  const key=btn.dataset.key, delta=Number(btn.dataset.delta||1);
+  cart[key]=Math.max(0,(cart[key]||0)+delta);
+  document.getElementById("q-"+key).textContent=cart[key];
+  renderCart();
+ });
+});
+function renderCart(){
+ const cartEl=document.getElementById("cart");
+ const keys=Object.keys(cart).filter(k=>cart[k]>0);
+ let total=0,count=0,html="";
+ keys.forEach(k=>{
+  const qty=cart[k], buttons=document.querySelectorAll('[data-key="'+k+'"]');
+  const plus=[...buttons].find(b=>!b.dataset.delta);
+  const price=Number(plus?.dataset.price||0);
+  const pending=k==="nemo-preorder";
+  total+=qty*price;count+=qty;
+  html+=`<div class="cart-line"><span>${labels[k]} × ${qty}${pending?' <small class="muted">(price pending)</small>':''}</span><b>${pending?'Price pending':'$'+(qty*price).toFixed(2)}</b></div>`;
+ });
+ cartEl.innerHTML=html||'<p class="muted">Your selected items will appear here.</p>';
+ document.getElementById("itemcount").textContent=count+" item"+(count===1?"":"s");
+ document.getElementById("grandtotal").textContent="$"+total.toFixed(2);
+}
+</script>
+</body></html>
